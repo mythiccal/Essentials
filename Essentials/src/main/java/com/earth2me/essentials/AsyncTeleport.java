@@ -210,7 +210,8 @@ public class AsyncTeleport implements IAsyncTeleport {
                     //The chunk we're teleporting to is 100% going to be loaded here, no need to teleport async.
                     teleportee.getBase().teleport(loc, cause);
                 } else {
-                    if (ess.getSettings().isTeleportToCenterLocation()) {
+                    // Preserve exact coordinates for /back to avoid clipping/faling
+                    if (ess.getSettings().isTeleportToCenterLocation() && tpType != TeleportType.BACK) {
                         loc = LocationUtil.getRoundedDestination(loc);
                     }
                     //There's a *small* chance the rounded destination produces a location outside the loaded chunk so still teleport async here.
